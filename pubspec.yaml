@@ -1,6 +1,6 @@
 name: horizontal_drag_back_widget
 description: "An animation library for sliding right back to the previous route"
-version: 0.0.1
+version: 0.0.2
 homepage: https://github.com/laoge-lol/horizontal_drag_back_widget
 repository: https://github.com/laoge-lol/horizontal_drag_back_widget
 issue_tracker: https://github.com/laoge-lol/horizontal_drag_back_widget/issues
