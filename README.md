@@ -15,7 +15,7 @@ An animation library for sliding right back to the previous route
 
 ## Features
 
-![Demo](assets/demo.gif)
+![Demo](https://github.com/laoge-lol/horizontal_drag_back_widget/tree/main/assets/demo.gif?raw=true)
 
 ## Getting started
 
