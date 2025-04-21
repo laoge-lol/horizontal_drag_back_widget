@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:horizontal_drag_back_widget/horizontal_drag_back_container.dart';
 import 'package:horizontal_drag_back_widget/horizontal_drag_back_parent_widget.dart';
+import 'package:horizontal_drag_back_widget/horizontal_drag_back_widget.dart';
 
 import 'package:horizontal_drag_back_widget/horizontal_route_observer.dart';
 
@@ -42,6 +43,8 @@ class _MyAppState extends State<MyApp> {
                           context,
                           PageRouteBuilder(
                               opaque: false,
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
                               pageBuilder: (context, a1, a2) {
                                 return const SecondPage();
                               }));
@@ -66,21 +69,25 @@ class SecondPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: HorizontalDragBackContainer(
-        child: Container(
-          width: double.infinity,
-          color: Colors.white,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('Second Page'),
-              MaterialButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("BACK"),
-              )
-            ],
-          ),
+        child: Builder(
+          builder: (context) {
+            return Container(
+              width: double.infinity,
+              color: Colors.white,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Second Page'),
+                  MaterialButton(
+                    onPressed: () {
+                      HorizontalDragBackState.of(context)?.pop();
+                    },
+                    child: const Text("BACK"),
+                  )
+                ],
+              ),
+            );
+          }
         ),
       ),
     );

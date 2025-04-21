@@ -314,24 +314,39 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     }
 
     return PopScope(
-      canPop: widget.canPop,
+      // canPop: widget.canPop,
+      canPop: false,
       onPopInvokedWithResult: (pop, _) {
         print('onPopInvokedWithResult:$pop,$popping');
-        if (pop) {
-          if (!popping) {
-            /// Get.back()/Navigator.pop()进这里
-            systemPopping = true;
-            pageAnimation(value: -1);
-          }
+        if(!pop && !popping){
+          onTapBackKey();
         }
+        // if (pop) {
+        //   if (!popping) {
+        //     /// Get.back()/Navigator.pop()进这里
+        //     systemPopping = true;
+        //     pageAnimation(value: -1);
+        //   }
+        // }
       },
-      child: Builder(builder: (context) {
-        if (!widget.hasScrollChild) {
-          return ges(context);
-        }
-        return content(context);
-      }),
+      child: HorizontalDragBackState(
+        onTapBackKey: onTapBackKey,
+        child: Builder(builder: (context) {
+          if (!widget.hasScrollChild) {
+            return ges(context);
+          }
+          return content(context);
+        }),
+      ),
     );
+  }
+
+  void onTapBackKey() {
+    tween.begin = 0.0;
+    tween.end = width;
+    animationController.duration = Duration(milliseconds: maxMilliseconds);
+    animationController.forward(from: 0);
+    popping = true;
   }
 
   void pageAnimation({num? value}) {
@@ -379,5 +394,27 @@ class _HorizontalDragBackWidgetState extends State<HorizontalDragBackWidget>
     animationController.dispose();
     enterAnimationController.dispose();
     super.dispose();
+  }
+}
+
+class HorizontalDragBackState extends InheritedWidget {
+  final Function? _onTapBackKey;
+
+  const HorizontalDragBackState(
+      {super.key, Function? onTapBackKey, required super.child})
+      : _onTapBackKey = onTapBackKey;
+
+  @override
+  bool updateShouldNotify(covariant HorizontalDragBackState oldWidget) {
+    return oldWidget._onTapBackKey != _onTapBackKey;
+  }
+
+  static HorizontalDragBackState? of(BuildContext context) {
+    return context
+        .dependOnInheritedWidgetOfExactType<HorizontalDragBackState>();
+  }
+
+  pop() {
+    _onTapBackKey?.call();
   }
 }

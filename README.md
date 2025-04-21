@@ -49,21 +49,25 @@ class SecondPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: HorizontalDragBackContainer(
-        child: Container(
-          width: double.infinity,
-          color: Colors.white,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text('Second Page'),
-              MaterialButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("BACK"),
-              )
-            ],
-          ),
+        child: Builder(
+            builder: (context) {
+              return Container(
+                width: double.infinity,
+                color: Colors.white,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Second Page'),
+                    MaterialButton(
+                      onPressed: () {
+                        HorizontalDragBackState.of(context)?.pop();
+                      },
+                      child: const Text("BACK"),
+                    )
+                  ],
+                ),
+              );
+            }
         ),
       ),
     );
@@ -76,4 +80,9 @@ child page settings
 ```
 opaque: false
 ```
+pop animation method
+```
+HorizontalDragBackState.of(context)?.pop();
+```
+
 
